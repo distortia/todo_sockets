@@ -11,6 +11,17 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
 
+# TODO:
+
+[ ] - Allow items to be updated
+
+[ ] - DB Crud Operations
+
+[ ] - Explore `ETS` for caching
+
+[ ] - Throw in auth?
+
+
 ## Learn more
 
   * Official website: http://www.phoenixframework.org/
