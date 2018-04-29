@@ -64,16 +64,18 @@ let todoInput = document.getElementById('todo-input')
 let addButton = document.getElementById('add-button')
 let deleteButtons = document.getElementsByClassName('delete')
 
+// Add Item to list by hitting enter key on the input field
 todoInput.addEventListener('keypress', event => {
   if(event.keyCode === 13) {
-    channel.push('new_item', {body: todoInput.value})
+    channel.push('new_item', {body: todoInput.value, id: randomizer()})
     todoInput.value = ''
   }
 })
 
+// Add Item to list by clicking the add button
 addButton.addEventListener('click', event => {
   if(todoInput.value) {
-    channel.push('new_item', {body: todoInput.value})
+    channel.push('new_item', {body: todoInput.value, id: randomizer()})
     todoInput.value = ''
   }
 })
@@ -81,12 +83,12 @@ addButton.addEventListener('click', event => {
 channel.on('new_item', payload => {
   let todoItem = document.createElement('li')
   let deleteButton = document.createElement('button')
-  let id = `delete-button-${randomizer() + 1}`
+  let id = `delete-button-${payload.id}`
   deleteButton.innerText = 'Delete'
   deleteButton.setAttribute('id', id)
   deleteButton.setAttribute('class', `delete-button`)
   deleteButton.addEventListener('click', event => {
-    channel.push('delete_item', {body: id})
+    channel.push('delete_item', {id: id})
   })
   todoItem.innerText = `${payload.body}`
   todoItem.appendChild(deleteButton)
@@ -94,7 +96,7 @@ channel.on('new_item', payload => {
 })
 
 channel.on('delete_item', payload => {
-  let todoItem = document.getElementById(payload.body).parentNode
+  let todoItem = document.getElementById(payload.id).parentNode
   list.removeChild(todoItem)
 })
 
